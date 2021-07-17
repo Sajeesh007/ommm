@@ -1,5 +1,9 @@
 import Image from 'next/image'
+import {useAlbum} from '../ContextProvider'
+
 function Card({image,title,artist}) {
+
+    const {albumData} = useAlbum()
     
     return (
         <div>
