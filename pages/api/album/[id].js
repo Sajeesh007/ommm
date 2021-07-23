@@ -14,7 +14,7 @@ export default async function handler(req, res) {
      });
    
 
-     await axios(`https://api.spotify.com/v1/albums?ids=${albumId.join('%2C')}`, { //https://api.spotify.com/v1/albums?ids=${albumId.join('%')}
+     await axios(`https://api.spotify.com/v1/albums?ids=${albumId.join('%2C')}`, { //https://api.spotify.com/v1/albums?ids=${albumId.join('%2C')}
           headers: { 
             'Authorization' : `Bearer ${req.query.id}` ,
           },
