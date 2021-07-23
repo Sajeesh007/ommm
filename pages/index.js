@@ -14,22 +14,6 @@ export default function Home({albumDetails}) {
   const {setAlbumData,setLatestAlbum} = useAlbum()
 
   useEffect(() => {
-    // axios.get('api/token')
-    // .then((token)=>{
-    //   const t=token.data.toString()
-    //   axios.get(`api/album/${t}`)
-    //   .then((albumDetails)=>{
-    //     setAlbumData(albumDetails.data.albums)
-    //     setLatestAlbum(albumDetails.data.albums[0])
-    //   })
-    //   .catch((e)=>{
-    //     console.error(e)
-    //   })
-    // })
-    // .catch((e)=>{
-    //   console.error(e)
-    // })
-    console.log(albumDetails)
     setAlbumData(albumDetails.albums)
     setLatestAlbum(albumDetails.albums[0])
   }, [])
@@ -48,9 +32,9 @@ export default function Home({albumDetails}) {
 
 export async function getServerSideProps(context) {
 
-  const token = await axios.get('http://localhost:3000/api/token')
+  const token = await axios.get('https://ommm.vercel.app/api/token')
   const t = await token.data.toString()
-  const albumDetails = await axios.get(`http://localhost:3000/api/album/${t}`)
+  const albumDetails = await axios.get(`https://ommm.vercel.app/api/album/${t}`)
   return {
     props: {
       albumDetails : albumDetails.data
