@@ -9,15 +9,18 @@ export function useAlbum(){
 function ContextProvider({children}) {
 
     const [albumData, setAlbumData] = useState(null)
-    const [latestAlbum, setLatestAlbum] = useState(null)
+    const [currentAlbum, setCurrentAlbum] = useState(null)
+    const [currentId, setCurrentId] = useState(null)
 
     return (
         <AlbumContext.Provider value= {
             {
                 albumData, 
                 setAlbumData,
-                latestAlbum,
-                setLatestAlbum,
+                currentAlbum,
+                setCurrentAlbum,
+                currentId, 
+                setCurrentId,
             } 
         }
         >

@@ -1,8 +1,8 @@
-import { useState,useEffect} from "react"
+import {useEffect} from "react"
 import Banner from "../components/Banner"
-import Header from "/components/Header"
-import Contentgrid from "../components/Contentgrid"
-import Footer from "../components/Footer"
+import Header from "/components/Menu/Header"
+import HomeGrid from "../components/Grid/HomeGrid"
+import Footer from "../components/Menu/Footer"
 import axios from "axios"
 import {useAlbum} from '../ContextProvider'
 
@@ -11,46 +11,40 @@ import {useAlbum} from '../ContextProvider'
 
 export default function Home({albumDetails}) {
 
-  const {setAlbumData,setLatestAlbum} = useAlbum()
+  const {setAlbumData,albumData} = useAlbum()
 
   useEffect(() => {
-    // axios.get('api/token')
-    // .then((token)=>{
-    //   const t=token.data.toString()
-    //   axios.get(`api/album/${t}`)
-    //   .then((albumDetails)=>{
-    //     setAlbumData(albumDetails.data.albums)
-    //     setLatestAlbum(albumDetails.data.albums[0])
-    //   })
-    //   .catch((e)=>{
-    //     console.error(e)
-    //   })
-    // })
-    // .catch((e)=>{
-    //   console.error(e)
-    // })
-    console.log(albumDetails)
-    setAlbumData(albumDetails.albums)
-    setLatestAlbum(albumDetails.albums[0])
+    setAlbumData(albumDetails)
   }, [])
+
  
   return (
     <div>
       <Header isHome/>
-      <Banner/>
-      <Contentgrid title='Latest Releases' viewMore/>
-      <div className="flex justify-between border-t-2 border-white border-dashed"/>
-      <Contentgrid title='Trending Playlists' viewMore isPlaylist/>
+      <Banner image={albumDetails.albums[0].images[0].url} 
+              title={albumDetails.albums[0].name} 
+              artist={albumDetails.albums[0].artists?.map((items)=>items?.name)}
+              isHome
+      />
+      <div className='bg-gray-900'>
+        <HomeGrid title='Latest Releases'/>
+        <div className="flex justify-between border-t-2 border-white border-dashed"/>
+        <HomeGrid title='Trending Playlists' isPlaylist/>
+      </div>
       <Footer/>
     </div>
   )
 }
 
-export async function getServerSideProps(context) {
+export async function getServerSideProps() {
 
-  const token = await axios.get('http://localhost:3000/api/token')
+  const production = process.env.PRODUCTION
+  const prodUrl = process.env.PRODUCTION_URL
+  const devUrl = process.env.DEVELOPEMENT_URL
+
+  const token = await axios.get(`${production ? prodUrl : devUrl}api/token`)
   const t = await token.data.toString()
-  const albumDetails = await axios.get(`http://localhost:3000/api/album/${t}`)
+  const albumDetails = await axios.get(`${production ? prodUrl : devUrl}api/album/${t}`)
   return {
     props: {
       albumDetails : albumDetails.data
