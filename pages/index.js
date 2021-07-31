@@ -15,6 +15,7 @@ export default function Home({albumDetails}) {
 
   useEffect(() => {
     setAlbumData(albumDetails)
+    
   }, [])
 
  
