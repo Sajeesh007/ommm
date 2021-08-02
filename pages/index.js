@@ -43,6 +43,8 @@ export async function getServerSideProps() {
   const prodUrl = process.env.PRODUCTION_URL
   const devUrl = process.env.DEVELOPEMENT_URL
 
+  console.log(devUrl);
+
   const token = await axios.get(`${production ? prodUrl : devUrl}api/token`)
   const t = await token.data.toString()
   const albumDetails = await axios.get(`${production ? prodUrl : devUrl}api/album/${t}`)
