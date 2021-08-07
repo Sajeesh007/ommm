@@ -9,7 +9,7 @@ function Card({image,title,artist,itemKey}) {
   const { id } = router.query
 
  
-  const {setCurrentAlbum,albumData} = useAlbum()
+  const {setCurrentAlbum,albumData,setCurrentAlbumId} = useAlbum()
   const [artistState, setArtistState] = useState(artist)
   const [titleState, setTitleState] = useState(title)
 
@@ -23,6 +23,7 @@ function Card({image,title,artist,itemKey}) {
 
   const handleClick = (e)=>{
     e.preventDefault()
+    setCurrentAlbumId(parseInt(e.currentTarget.id))
     setCurrentAlbum(albumData?.albums[parseInt(e.currentTarget.id)]);
     router.push(`/releases/${title.replace(/\s+/g, '-').toLowerCase()}`)
   }

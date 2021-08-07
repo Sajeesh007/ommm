@@ -7,18 +7,15 @@ import axios from "axios"
 import {useAlbum} from '../ContextProvider'
 
 
-
-
 export default function Home({albumDetails}) {
 
   const {setAlbumData,albumData} = useAlbum()
 
-  useEffect(() => {
-    setAlbumData(albumDetails)
-    
-  }, [])
 
- 
+  useEffect(() => {
+    albumData === null && setAlbumData(albumDetails) 
+  }, [albumDetails,setAlbumData,albumData])
+  
   return (
     <div>
       <Header isHome/>
@@ -39,15 +36,9 @@ export default function Home({albumDetails}) {
 
 export async function getServerSideProps() {
 
-  const production = process.env.PRODUCTION
-  const prodUrl = process.env.PRODUCTION_URL
-  const devUrl = process.env.DEVELOPEMENT_URL
-
-  console.log(devUrl);
-
-  const token = await axios.get(`${production ? prodUrl : devUrl}api/token`)
+  const token = await axios.get(`${process.env.PRODUCTION ? process.env.PRODUCTION_URL : process.env.DEVELOPEMENT_URL}api/token`)
   const t = await token.data.toString()
-  const albumDetails = await axios.get(`${production ? prodUrl : devUrl}api/album/${t}`)
+  const albumDetails = await axios.get(`${process.env.PRODUCTION ? process.env.PRODUCTION_URL : process.env.DEVELOPEMENT_URL}api/album/${t}`)
   return {
     props: {
       albumDetails : albumDetails.data

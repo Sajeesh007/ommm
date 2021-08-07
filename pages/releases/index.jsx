@@ -11,19 +11,17 @@ export default function Releases() {
 
   
   useEffect(() => {
-    const fetchAlbum = async () =>{
-      const token = await axios.get(`api/token`)
-      const t = await token.data.toString()
-      const albumDetails = await axios.get(`api/album/${t}`)
-      setAlbumData(albumDetails.data)
-    }
-
     if(albumData == null){
       fetchAlbum()
     }
-
   }, [])
 
+  const fetchAlbum = async () =>{
+    const token = await axios.get(`api/token`)
+    const t = await token.data.toString()
+    const albumDetails = await axios.get(`api/album/${t}`)
+    setAlbumData(albumDetails.data)
+  }
 
   return (
     <div>

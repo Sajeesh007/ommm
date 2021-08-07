@@ -11,6 +11,7 @@ function ContextProvider({children}) {
     const [albumData, setAlbumData] = useState(null)
     const [currentAlbum, setCurrentAlbum] = useState(null)
     const [currentId, setCurrentId] = useState(null)
+    const [currentAlbumId, setCurrentAlbumId] = useState(0)
 
     return (
         <AlbumContext.Provider value= {
@@ -21,6 +22,8 @@ function ContextProvider({children}) {
                 setCurrentAlbum,
                 currentId, 
                 setCurrentId,
+                currentAlbumId,
+                setCurrentAlbumId
             } 
         }
         >

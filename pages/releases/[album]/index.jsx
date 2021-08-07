@@ -1,4 +1,5 @@
 import { useRouter } from 'next/router'
+import { useEffect } from 'react'
 import Banner from '../../../components/Banner'
 import Footer from '../../../components/Menu/Footer'
 import Header from '../../../components/Menu/Header'
@@ -13,13 +14,21 @@ export default function Albums() {
   const router = useRouter()
   const { id } = router.query
 
-  const {currentAlbum} = useAlbum()
+  const {currentAlbum,setCurrentAlbum,currentAlbumId} = useAlbum()
 
-	// const image= 'https://i.scdn.co/image/ab67616d0000b2739e19db87c95f9d5f34c0e070'
-  // const artist = 'cyb3r0n'
-  // const title = 'Itami'
-  {/* <Banner artist={artist} title={title} image={image} isHome={false}/> */}
-  
+	useEffect(() => {
+    if(currentAlbum == null){
+      fetchAlbum()
+    }
+  }, [])
+
+  const fetchAlbum = async () =>{
+    const token = await axios.get(`api/token`)
+    const t = await token.data.toString()
+    const albumDetails = await axios.get(`api/album/${t}`)
+    setCurrentAlbum(albumDetails?.data?.albums[currentAlbumId])
+  }
+
 
 	return (
 		<div className='text-white bg-gray-900'> 

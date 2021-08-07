@@ -8,7 +8,6 @@ import ReleaseCard from "./Cards/ReleaseCard"
 
 export default function Banner({image,title,artist,releaseDate,isHome}) {
 
-
   return (
     <div className='bg-gray-900'>
      	<div className='absolute z-0'>
