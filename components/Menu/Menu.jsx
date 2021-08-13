@@ -3,7 +3,7 @@ import { IoClose } from "react-icons/io5";
 
 //bg-gradient-to-b from-red-500 via-red-400 to-black
 export default function Menu({handleClick}) {
-    
+  
   return (
   <div className='backdrop-filter backdrop-blur bg-opacity-80 bg-gray-900 
      h-screen w-screen absolute lg:relative '>

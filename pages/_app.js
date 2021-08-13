@@ -1,6 +1,6 @@
 import '../styles/globals.css'
 import 'tailwindcss/tailwind.css'
-import ContextProvider from '../ContextProvider'
+import ContextProvider from '../store/ContextProvider'
 import Head from 'next/head'
 import logo from '../public/logo.png'
 

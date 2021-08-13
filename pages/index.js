@@ -1,32 +1,31 @@
 import {useEffect} from "react"
-import Banner from "../components/Banner"
+import Banner from "../components//Cards/Banner"
 import Header from "/components/Menu/Header"
 import HomeGrid from "../components/Grid/HomeGrid"
 import Footer from "../components/Menu/Footer"
 import axios from "axios"
-import {useAlbum} from '../ContextProvider'
+import {useAlbum} from '../store/ContextProvider'
+import {albumId} from '../utils/albums'
+import ReleaseCard from "../components/Cards/ReleaseCard"
 
 
 export default function Home({albumDetails}) {
 
-  const {setAlbumData,albumData} = useAlbum()
-
+  const {setAlbumData,setCurrentAlbum} = useAlbum()
 
   useEffect(() => {
-    albumData === null && setAlbumData(albumDetails) 
-  }, [albumDetails,setAlbumData,albumData])
-  
+    setAlbumData(albumDetails.albums) 
+    setCurrentAlbum(albumDetails.albums[0])
+  }, [])
+
   return (
     <div>
       <Header isHome/>
-      <Banner image={albumDetails.albums[0].images[0].url} 
-              title={albumDetails.albums[0].name} 
-              artist={albumDetails.albums[0].artists?.map((items)=>items?.name)}
-              isHome
-      />
-      <div className='bg-gray-900'>
+      <Banner />
+      <ReleaseCard isHome/> 
+      <div>
         <HomeGrid title='Latest Releases'/>
-        <div className="flex justify-between border-t-2 border-white border-dashed"/>
+        <div className="flex justify-between my-8 border-t-2 border-white border-dashed"/>
         <HomeGrid title='Trending Playlists' isPlaylist/>
       </div>
       <Footer/>
@@ -36,9 +35,8 @@ export default function Home({albumDetails}) {
 
 export async function getServerSideProps() {
 
-  const token = await axios.get(`${process.env.PRODUCTION ? process.env.PRODUCTION_URL : process.env.DEVELOPEMENT_URL}api/token`)
-  const t = await token.data.toString()
-  const albumDetails = await axios.get(`${process.env.PRODUCTION ? process.env.PRODUCTION_URL : process.env.DEVELOPEMENT_URL}api/album/${t}`)
+  const token = await axios.get(`${process.env.PRODUCTION ? process.env.PRODUCTION_URL : process.env.DEVELOPEMENT_URL}api/token`) 
+  const albumDetails = await axios.get(`${process.env.PRODUCTION ? process.env.PRODUCTION_URL : process.env.DEVELOPEMENT_URL}api/album/${token.data.toString()}/${albumId.join('/')}`)
   return {
     props: {
       albumDetails : albumDetails.data

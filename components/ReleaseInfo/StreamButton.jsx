@@ -1,7 +1,7 @@
 import { useState,useEffect } from "react";
 import { useRouter } from 'next/router'
 import { SiApplemusic, SiYoutube, SiSpotify } from "react-icons/si";
-import {useAlbum} from '../../ContextProvider'
+import {useAlbum} from '../../store/ContextProvider'
 
 export default function StreamButton({provider}) {
 

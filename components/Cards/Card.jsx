@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import Image from 'next/image'
 import { useRouter } from 'next/router'
-import {useAlbum} from '../../ContextProvider'
+import {useAlbum} from '../../store/ContextProvider'
 
 function Card({image,title,artist,itemKey}) {
 
@@ -24,7 +24,7 @@ function Card({image,title,artist,itemKey}) {
   const handleClick = (e)=>{
     e.preventDefault()
     setCurrentAlbumId(parseInt(e.currentTarget.id))
-    setCurrentAlbum(albumData?.albums[parseInt(e.currentTarget.id)]);
+    setCurrentAlbum(albumData[parseInt(e.currentTarget.id)]);
     router.push(`/releases/${title.replace(/\s+/g, '-').toLowerCase()}`)
   }
 

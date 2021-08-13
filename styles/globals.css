@@ -6,5 +6,16 @@
     *{
         @apply m-0 p-0 box-border;
     }
-    
+    label{
+      @apply mb-2 text-white select-none;
+    }
+    input{
+      @apply focus:outline-none;
+    }
+    tr{
+      @apply border-2;
+    }
+    td,th{
+      @apply border-2 w-48;
+    }
 }
