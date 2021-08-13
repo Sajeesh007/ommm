@@ -21,11 +21,9 @@ export default async function handler(req, res){
         ('${catalogue_number}', '${album_name}', '${artists}','${genre}','${spotify_id}''${release_date}')`
       )
       res.statusCode = 201
+      res.json({rows,fields})
     }catch(error){
-      error = new Error('An error occurred while connecting to the database')
-      error.status = 500
-      error.info = { message: 'An error occurred while connecting to the database' }
-      throw error
+      console.log(error);
     }
       break
 
@@ -35,10 +33,11 @@ export default async function handler(req, res){
         res.statusCode = 200
         res.json(getRows)
       } catch (error) {
-        error = new Error('An error occurred while connecting to the database')
-        error.status = 500
-        error.info = { message: 'An error occurred while connecting to the database' }
-        throw error
+        // error = new Error('An error occurred while connecting to the database')
+        // error.status = 501
+        // error.info = { message: 'An error occurred while connecting to the database' }
+        // throw error
+        console.log(error);
       }
       break
 

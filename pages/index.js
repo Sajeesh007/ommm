@@ -35,8 +35,8 @@ export default function Home({albumDetails}) {
 
 export async function getServerSideProps() {
 
-  const token = await axios.get(`${process.env.PRODUCTION ? process.env.PRODUCTION_URL : process.env.DEVELOPEMENT_URL}api/token`) 
-  const albumDetails = await axios.get(`${process.env.PRODUCTION ? process.env.PRODUCTION_URL : process.env.DEVELOPEMENT_URL}api/album/${token.data.toString()}/${albumId.join('/')}`)
+  const token = await axios.get(`${!process.env.PRODUCTION ? process.env.PRODUCTION_URL : process.env.DEVELOPEMENT_URL}api/token`) 
+  const albumDetails = await axios.get(`${!process.env.PRODUCTION ? process.env.PRODUCTION_URL : process.env.DEVELOPEMENT_URL}api/album/${token.data.toString()}/${albumId.join('/')}`)
   return {
     props: {
       albumDetails : albumDetails.data

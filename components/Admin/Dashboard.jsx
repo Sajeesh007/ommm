@@ -26,7 +26,8 @@ export default function Dashboard() {
           release_date: data.release_date
         }
       })
-    });
+    })
+    console.log(res);
   }
 
   const handleClick = async(e)=>{
@@ -86,7 +87,6 @@ export default function Dashboard() {
       <div className='flex flex-col mt-8 justify-start items-center bg-green-400'>
         <button className='bg-red-400 my-2 px-4 py-2 cursor-pointer rounded-full hover:bg-red-100 focus:outline-none' onClick={handleClick}>
           Get Data
-          {console.log(value.length)}
         </button>
         
         <table className='table-auto'>
