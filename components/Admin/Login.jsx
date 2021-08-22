@@ -11,14 +11,12 @@ export default function Login() {
   }
   
   return (
-    <div>
-      <div className='absolute top-96 right-96 left-96 flex justify-center items-center bg-red-400 h-16'>
-        <form onSubmit={handleSubmit(onSubmit)}>
-          <label htmlFor='name'>Name</label>
-            <input {...register("firstName",{ required: true })} className='ml-2 focus:outline-none'/>
-            <input type="submit" />
+    <div className='flex justify-center items-center h-screen w-screen'>
+        <form onSubmit={handleSubmit(onSubmit)} className='flex flex-col justify-center items-center'>
+          <label htmlFor='firstName'>Name</label>
+          <input type='password'{...register("firstName",{ required: true })} className='focus:outline-none'/>
+            <input type="submit" className='bg-white rounded-sm px-4 py-1 mt-2'/>
         </form>
-      </div>
     </div>
   )
 }

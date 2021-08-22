@@ -12,16 +12,22 @@ export default function Releases() {
   const {setAlbumData,albumData} = useAlbum()
 
   useEffect(() => {
-
     if(albumData === null){
       fetchAlbum()
     }
   }, [])
 
   const fetchAlbum = async () =>{
-    const token = await axios.get(`api/token`)
-    const albumDetails = await axios.get(`api/album/${token.data.toString()}/${albumId.join('/')}`)
-    setAlbumData(albumDetails.data.albums)
+    const albumDetails = await axios({
+      method: 'post',
+      url: `${process.env.PRODUCTION ? process.env.PRODUCTION_URL : process.env.DEVELOPEMENT_URL}api/album`,
+      data: {
+        albumIds : `${albumId.join('%2C')}`
+      }
+    }).catch((e)=>{
+      console.log(e);
+    })
+    setAlbumData(albumDetails?.data?.albums)
   }
 
   return (

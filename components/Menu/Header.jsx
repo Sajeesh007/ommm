@@ -12,18 +12,21 @@ export default function Header() {
 
   const handleClick = ()=> {
     setMenuHidden(!menuHidden) 
-  } 
+  }
+   
+  const handleScroll = () => {
+    window.scrollY > 40 && setHideMenu(!hideMenu) 
+  }
 
   useEffect(() => {
-     window.onscroll = () =>{
-      if (window.scrollY > 40)
-          setHideMenu(true)
-      else
-          setHideMenu(false)
+    window.addEventListener('scroll',handleScroll)
+    return()=>{
+      window.removeEventListener('scroll',handleScroll)
     }
   }, [])
-  
 
+  
+  
   return (
     <>
         {

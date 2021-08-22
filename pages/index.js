@@ -13,9 +13,11 @@ export default function Home({albumDetails}) {
 
   const {setAlbumData,setCurrentAlbum} = useAlbum()
 
+
+
   useEffect(() => {
-    setAlbumData(albumDetails.albums) 
-    setCurrentAlbum(albumDetails.albums[0])
+    setAlbumData(albumDetails?.albums) 
+    setCurrentAlbum(albumDetails?.albums[0])
   }, [])
 
   return (
@@ -35,9 +37,15 @@ export default function Home({albumDetails}) {
 
 export async function getServerSideProps() {
 
-  const token = await axios.get(`${!process.env.PRODUCTION ? process.env.PRODUCTION_URL : process.env.DEVELOPEMENT_URL}api/token`) 
-  const albumDetails = await axios.get(`${!process.env.PRODUCTION ? process.env.PRODUCTION_URL : process.env.DEVELOPEMENT_URL}api/album/${token.data.toString()}/${albumId.join('/')}`)
-  return {
+  const albumDetails = await axios({
+    method: 'post',
+    url: `${process.env.PRODUCTION ? process.env.PRODUCTION_URL : process.env.DEVELOPEMENT_URL}api/album`,
+    data: {
+      albumIds : `${albumId.join('%2C')}`
+    }
+  });
+
+   return {
     props: {
       albumDetails : albumDetails.data
     }

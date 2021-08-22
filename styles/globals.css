@@ -16,6 +16,6 @@
       @apply border-2;
     }
     td,th{
-      @apply border-2 w-48;
+      @apply border-2 w-40 sm:w-48 break-all;
     }
 }

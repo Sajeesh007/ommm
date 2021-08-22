@@ -1,4 +1,5 @@
 import React, { createContext, useState, useContext } from 'react';
+import firebaseApp from '../firebase/firebase.config'
 
 const AlbumContext = createContext()
 
@@ -27,7 +28,7 @@ function ContextProvider({children}) {
                 setLogin,
             } 
         }
-        >
+        >   
             {children}
         </AlbumContext.Provider>
     )

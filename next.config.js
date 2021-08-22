@@ -11,5 +11,6 @@ module.exports = {
       SPOTIFY_CLIENT_ID: 'eef6d36598a648b98ae517d733f73b3d',
       SPOTIFY_CLIENT_SECERET: 'e30b102c4c574c2a819780d73b9b3edd',
       ADMIN_PASSWORD:'Unni@2001',
-    },
+      GOOGLE_APPLICATION_CREDENTIALS: '../secret.json'
+    }
 };
