@@ -7,15 +7,26 @@
         @apply m-0 p-0 box-border;
     }
     label{
-      @apply mb-2 text-white select-none;
+      @apply text-white select-none opacity-70;
     }
-    input{
-      @apply focus:outline-none;
+    input,textarea{
+      @apply text-white focus:outline-none border-b bg-transparent w-72;
     }
+    
     tr{
       @apply border-2;
     }
     td,th{
       @apply border-2 w-40 sm:w-48 break-all;
     }
+}
+
+@layer components {
+  .form-divider{
+    @apply flex flex-col p-3;
+  }
+
+  .file-upload{
+    @apply text-white border-none pt-2;
+  }
 }

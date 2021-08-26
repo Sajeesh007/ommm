@@ -7,7 +7,7 @@ export default function ContentGrid() {
   const {albumData} = useAlbum()
 
    return (
-    <div className='text-white relative my-10 select-none'>
+    <div className='text-white relative my-6 select-none'>
       <div className='grid grid-cols-2 gap-4 place-items-center pt-2 px-2 md:grid-cols-4'>
         { 
           albumData ? (

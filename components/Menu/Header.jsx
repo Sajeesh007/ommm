@@ -15,7 +15,7 @@ export default function Header() {
   }
    
   const handleScroll = () => {
-    window.scrollY > 40 && setHideMenu(!hideMenu) 
+    window.scrollY > 40 ? setHideMenu(true) : setHideMenu(false)
   }
 
   useEffect(() => {
@@ -24,7 +24,6 @@ export default function Header() {
       window.removeEventListener('scroll',handleScroll)
     }
   }, [])
-
   
   
   return (

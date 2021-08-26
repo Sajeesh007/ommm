@@ -12,9 +12,7 @@ import ReleaseCard from "../components/Cards/ReleaseCard"
 export default function Home({albumDetails}) {
 
   const {setAlbumData,setCurrentAlbum} = useAlbum()
-
-
-
+  
   useEffect(() => {
     setAlbumData(albumDetails?.albums) 
     setCurrentAlbum(albumDetails?.albums[0])
@@ -39,7 +37,7 @@ export async function getServerSideProps() {
 
   const albumDetails = await axios({
     method: 'post',
-    url: `${process.env.PRODUCTION ? process.env.PRODUCTION_URL : process.env.DEVELOPEMENT_URL}api/album`,
+    url: `${process.env.NODE_ENV === 'development' ? process.env.DEVELOPEMENT_URL : process.env.PRODUCTION_URL}api/album`,
     data: {
       albumIds : `${albumId.join('%2C')}`
     }

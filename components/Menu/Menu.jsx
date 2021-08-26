@@ -26,6 +26,11 @@ export default function Menu({handleClick}) {
           Playlists
         </a>
       </Link>
+      <Link href='/submissions/demo'>
+        <a>
+          Submission
+        </a>
+      </Link>
       <Link href='/about'>
         <a>
           About
