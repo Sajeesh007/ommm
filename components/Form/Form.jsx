@@ -8,22 +8,27 @@ export default function Form() {
 
 
   const onSubmit = (data) => {
-    axios.post('/api/formSubmit',{
+
+    const formData = new FormData();
+    formData.append('email', data.email);
+    formData.append('artist', data.artist_name);
+    formData.append('song', data.song_name,);
+    formData.append('link', data.soundcloud_url);
+    formData.append('instagram', data.instagram_url);
+    formData.append('message', data.message);
+    formData.append('file', data.file_upload[0]);
+
+    axios.post('/api/formSubmit',formData,{
       headers:{
-       'Content-Type':'application/json'
-      },
-      data : {
-        email : data.email,
-        artist : data.artist_name,
-        song: data.song_name,
-        link: data.soundcloud_url,
-        // file : data.file_upload[0],
-        instagram : data.instagram_url ,
-        message: data.message
+       'Content-Type':'multipart/form-data'
       }
-    })
+      })
   } 
+
+
   
+
+
   return (
     <div>
       <form autoComplete="off" onSubmit={handleSubmit(onSubmit)} className='flex flex-col justify-center items-center pb-12 text-white'>
@@ -68,11 +73,11 @@ export default function Form() {
             {errors.sound_cloud_url && <Info errors={errors.soundcloud_url}/>}
           </div>
 
-          {/* <div className='form-divider'>
+          <div className='form-divider'>
             <label htmlFor='file_upload'>Upload the MP3 file</label>
             <input className='file-upload' type='file' {...register("file_upload")}/>
             {errors.sound_cloud_url && <Info errors={errors.file_upload}/>}
-          </div> */}
+          </div>
 
           <div className='form-divider'>
             <label htmlFor='instagram_url'>Instagram</label>

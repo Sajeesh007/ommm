@@ -1,6 +1,5 @@
 import { useState } from "react";
 import {useForm } from "react-hook-form";
-
 import firebaseApp from "../../firebase/firebase.config";
 import { collection, addDoc, getDocs, getFirestore, Timestamp } from "firebase/firestore";
 
@@ -12,25 +11,28 @@ export default function Dashboard() {
   const { register, handleSubmit } = useForm();
 
   const [value, setValue] = useState([])
-  
+  const [success,setSuccess] = useState('')
 
   const onSubmit = async (data)=> {
+    setSuccess('Sending')
     try {
       const albumRef = await addDoc(collection(db, "albums"), {
         catalogue_number: data.catalogue_number, 
         album_name: data.album_name, 
         artists: data.artists, 
         genre: data.genre, 
-        spotify_id: data.spotify_id, 
+        spotify_id: data.spotify_id.substring(31,53), 
         release_date: Timestamp.fromDate(new Date(data.release_date))
       })
-      console.log('ok');
+      setSuccess('Success')
     } catch(e) {
       console.log(e);
+      setSuccess('Error')
     }
   }
 
   const handleClick = async () =>{
+    setSuccess('')
     setValue([])
     try {
       const querySnapshot = await getDocs(collection(db, "albums"));
@@ -41,18 +43,18 @@ export default function Dashboard() {
       console.log(e);
     }
   }
-
-
   
   return (
-    <div className='flex sm:flex-row flex-col justify-center items-center sm:items-start bg-black text-black'>
-
+    <div className='flex sm:flex-row flex-col justify-center items-center sm:items-start'>
       <div className='flex flex-col w-80 h-screen'>
+
         <h1 className='text-white text-2xl text-center mt-4'>Insert Data</h1>
-        <form onSubmit={handleSubmit(onSubmit)} className='flex flex-col justify-center items-center text-black'>
+
+        <form autoComplete="off" onSubmit={handleSubmit(onSubmit)} className='flex flex-col justify-center items-center text-white'>
+          
             <div className='flex flex-col m-4'>
               <label htmlFor='catalogue_number'>Catalogue Number</label>
-              <input {...register("catalogue_number",{ required: true })}/>
+              <input defaultValue='OMM' {...register("catalogue_number",{ required: true })}/>
             </div>
 
             <div className='flex flex-col m-4'>
@@ -84,6 +86,9 @@ export default function Dashboard() {
               <input className='bg-red-400 px-4 py-2 cursor-pointer hover:bg-red-100 rounded-full' type="submit" />
             </div>
           </form>
+          <div className='text-xl text-red-600 flex justify-center items-center'>
+            <p>{success}</p>
+          </div>
       </div>
 
       <div className='flex flex-col w-screen max-w-full justify-start items-center text-white overflow-x-auto'>

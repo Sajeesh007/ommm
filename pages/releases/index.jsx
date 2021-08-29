@@ -18,16 +18,19 @@ export default function Releases() {
   }, [])
 
   const fetchAlbum = async () =>{
-    const albumDetails = await axios({
+    axios({
       method: 'post',
-      url: `${process.env.PRODUCTION ? process.env.PRODUCTION_URL : process.env.DEVELOPEMENT_URL}api/album`,
+      url: `api/album`,
       data: {
         albumIds : `${albumId.join('%2C')}`
       }
-    }).catch((e)=>{
+    }).then((albumDetails)=>{
+      setAlbumData(albumDetails?.data?.albums)
+    })
+    .catch((e)=>{
       console.log(e);
     })
-    setAlbumData(albumDetails?.data?.albums)
+    
   }
 
   return (

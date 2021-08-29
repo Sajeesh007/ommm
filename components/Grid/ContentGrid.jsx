@@ -2,27 +2,19 @@ import Card from "../Cards/Card"
 import {useAlbum} from '../../store/ContextProvider'
 import Skeleton,{SkeletonTheme} from 'react-loading-skeleton';
 
-export default function ContentGrid() {
+export default function ContentGrid({isPlaylist}) {
 
-  const {albumData} = useAlbum()
+  const {albumData,playlistData} = useAlbum()
 
    return (
     <div className='text-white relative my-6 select-none'>
-      <div className='grid grid-cols-2 gap-4 place-items-center pt-2 px-2 md:grid-cols-4'>
-        { 
-          albumData ? (
-            albumData?.map((items,index)=>(
-              <Card key={items.id} itemKey={index} image={items?.images[0]} title={items?.name} artist={items?.artists?.map((items)=>items?.name)}/>
-              ))) : (
-          [1,2,3,4,5,6,7,8].map((_,index)=>(
-            <div key={index} > 
-              <SkeletonTheme color="#303030" highlightColor="#404040">
-                <Skeleton className='h-60 w-60'/>
-                <Skeleton height={10} width={330}/>
-              </SkeletonTheme>
-            </div>
-        )))}
-
+      <div className='grid grid-cols-2 gap-4 place-items-center pt-2 px-2 lg:grid-cols-4'>
+        {!isPlaylist ? (
+          albumData?.map((items,index)=><Card key={items.id} itemKey={index+1} image={items?.images[1]?.url} title={items?.name} artist={items?.artists?.map((items)=>items?.name)}/>)
+          ) : (
+            playlistData?.map((item)=>{return item?.map((items,index)=><Card isPlaylist key={index} Linkto={items[1]?.linkTo?.url} image={items[1]?.url} title={items[0]?.text}/>)})
+          )
+        }
       </div>
     </div>
   )

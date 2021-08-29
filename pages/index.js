@@ -1,21 +1,24 @@
 import {useEffect} from "react"
+import Prismic from '@prismicio/client'
+import axios from "axios"
+
 import Banner from "../components//Cards/Banner"
 import Header from "/components/Menu/Header"
 import HomeGrid from "../components/Grid/HomeGrid"
 import Footer from "../components/Menu/Footer"
-import axios from "axios"
 import {useAlbum} from '../store/ContextProvider'
 import {albumId} from '../utils/albums'
 import ReleaseCard from "../components/Cards/ReleaseCard"
 
 
-export default function Home({albumDetails}) {
+export default function Home({albumDetails,playlistDetails}) {
 
-  const {setAlbumData,setCurrentAlbum} = useAlbum()
+  const {setAlbumData,setCurrentAlbum,setPlaylistData} = useAlbum()
   
   useEffect(() => {
     setAlbumData(albumDetails?.albums) 
     setCurrentAlbum(albumDetails?.albums[0])
+    setPlaylistData([playlistDetails])
   }, [])
 
   return (
@@ -42,10 +45,18 @@ export async function getServerSideProps() {
       albumIds : `${albumId.join('%2C')}`
     }
   });
+  
+  const client = Prismic.client("https://ommm-website.prismic.io/api/v2")
+  const playlist = await client.query(
+    Prismic.Predicates.at('document.type', 'playlists_page')
+  )
+  const playlistDetails = Object.values(playlist.results[0].data)
+
 
    return {
     props: {
-      albumDetails : albumDetails.data
+      albumDetails : albumDetails.data,
+      playlistDetails : playlistDetails
     }
   }
 
