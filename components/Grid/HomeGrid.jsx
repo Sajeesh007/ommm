@@ -1,7 +1,6 @@
 import { useRouter } from 'next/router'
 import Card from "../Cards/Card"
 import {useAlbum} from '../../store/ContextProvider'
-import { MdNavigateNext } from "react-icons/md";
 
 
 export default function HomeGrid({title,isPlaylist}) {
@@ -10,9 +9,8 @@ export default function HomeGrid({title,isPlaylist}) {
 
   const {albumData,playlistData} = useAlbum()
 
-  const handleClick = (e) =>{
-    e.preventDefault()
-    router.push('/releases')
+  const handleClick = () =>{
+    isPlaylist ? router.push('/releases') : router.push('/playlists')
   }
 
    return (
@@ -27,7 +25,7 @@ export default function HomeGrid({title,isPlaylist}) {
           {!isPlaylist ? (
             albumData?.filter((_,key)=>{
               return(key > 0 && key < 9) 
-            }).map((items,index)=><Card key={items.id} itemKey={index+1} image={items?.images[1]?.url} title={items?.name} artist={items?.artists?.map((items)=>items?.name)}/>)
+            }).map((items,index)=><Card key={items?.id} itemKey={index+1} image={items?.images[1]?.url} title={items?.name} artist={items?.artists?.map((items)=>items?.name)} genre={items?.genre}/>)
             ) : (
               playlistData?.map((item)=>{return item?.map((items,index)=><Card isPlaylist  Linkto={items[1]?.linkTo?.url} key={index} image={items[1]?.url} title={items[0]?.text} artits={''}/>)})
             )

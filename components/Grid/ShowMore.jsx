@@ -12,22 +12,22 @@ export default function ShowMore() {
 
   const handleClick = async () => {
     if(showMoreClicked<1){
-    setShowMoreClicked((prevShowShowMoreClicked) => prevShowShowMoreClicked+1)
-    
-    const albumDetails = await axios({
-      method: 'post',
-      url: 'api/album',
-      data: {
-        albumIds : `${albumId2.join('%2C')}`
-      }
-    });
+      setShowMoreClicked((prevShowShowMoreClicked) => prevShowShowMoreClicked+1)
+      
+      const albumDetails = await axios({
+        method: 'post',
+        url: 'api/album',
+        data: {
+          albumIds : `${albumId2.join('%2C')}`
+        }
+      });
 
-    setAlbumData([...albumData,...albumDetails.data.albums])
-    if(showMoreClicked + 1 === 1){
-      setHideShowMore(true)
+      setAlbumData([...albumData,...albumDetails.data.albums])
+      if(showMoreClicked + 1 === 1){
+        setHideShowMore(true)
+      }
     }
   }
-}
 
   return (
     <>

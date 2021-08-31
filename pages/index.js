@@ -1,5 +1,4 @@
 import {useEffect} from "react"
-import Prismic from '@prismicio/client'
 import axios from "axios"
 
 import Banner from "../components//Cards/Banner"
@@ -38,20 +37,28 @@ export default function Home({albumDetails,playlistDetails}) {
 
 export async function getServerSideProps() {
 
+  const accessToken =  await axios.get('https://ommm-website.prismic.io/api/v2')
+  const ref = accessToken.data.refs[0].ref
+
+  const albumPredicates = '[at(document.type, "releases")]'
+  const albumOrdering = '[my.releases.release_date desc]'
+  const album = await axios.get(`https://ommm-website.prismic.io/api/v2/documents/search?ref=${ref}&q=[${albumPredicates}]&orderings=${albumOrdering}`)
+  
+  const id = album.data.results.map((releases)=>releases.data.release_details[3].text)
+  const genre = album.data.results.map((releases)=>releases.data.release_details[2].text)
+
   const albumDetails = await axios({
     method: 'post',
     url: `${process.env.NODE_ENV === 'development' ? process.env.DEVELOPEMENT_URL : process.env.PRODUCTION_URL}api/album`,
     data: {
-      albumIds : `${albumId.join('%2C')}`
+      albumIds : `${id.join('%2C')}`
     }
-  });
+  })
+  albumDetails.data.albums.map((albums,id)=>albums.genre = genre[id])
   
-  const client = Prismic.client("https://ommm-website.prismic.io/api/v2")
-  const playlist = await client.query(
-    Prismic.Predicates.at('document.type', 'playlists_page')
-  )
-  const playlistDetails = Object.values(playlist.results[0].data)
-
+  const playlistPredicates = '[at(document.type, "playlists_page")]'
+  const playlist =  await axios.get(`https://ommm-website.prismic.io/api/v2/documents/search?ref=${ref}&q=[${playlistPredicates}]`)
+  const playlistDetails = Object.values(playlist.data.results[0].data)
 
    return {
     props: {
