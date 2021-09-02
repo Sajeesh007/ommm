@@ -1,34 +1,54 @@
 import {useEffect} from "react"
 import axios from "axios"
 
+import { accessToken, album, playlist} from "../utils/helper"
 import Banner from "../components//Cards/Banner"
 import Header from "/components/Menu/Header"
 import HomeGrid from "../components/Grid/HomeGrid"
 import Footer from "../components/Menu/Footer"
 import {useAlbum} from '../store/ContextProvider'
-import {albumId} from '../utils/albums'
 import ReleaseCard from "../components/Cards/ReleaseCard"
-
+import Skelton from "../components/Skelton/Skelton"
+import HeroSkelton from "../components/Skelton/HeroSkelton"
 
 export default function Home({albumDetails,playlistDetails}) {
 
-  const {setAlbumData,setCurrentAlbum,setPlaylistData} = useAlbum()
+  const {setAlbumData,setCurrentAlbum,setPlaylistData,albumData} = useAlbum()
   
   useEffect(() => {
-    setAlbumData(albumDetails?.albums) 
-    setCurrentAlbum(albumDetails?.albums[0])
-    setPlaylistData([playlistDetails])
+    setAlbumData(albumDetails) 
+    setCurrentAlbum(albumDetails[0])
+    setPlaylistData(playlistDetails)
   }, [])
 
   return (
     <div>
       <Header isHome/>
       <Banner />
-      <ReleaseCard isHome/> 
+
+      {
+        (albumData) ? (
+          <ReleaseCard isHome/> 
+        ) : (
+        <div className='z-10 flex justify-center items-center'>
+          <HeroSkelton/>
+        </div>
+      )}
+
       <div>
-        <HomeGrid title='Latest Releases'/>
+        {
+          (albumData) ? (
+            <HomeGrid title='Latest Releases'/>
+          ) : (
+            <div className='grid grid-cols-2 gap-4 place-items-center my-8 px-2 lg:grid-cols-4'>
+              {[1,2,3,4,5,6,7,8].map((item)=><Skelton key={item} isPlaylist/>) }
+            </div>
+        )}
+
         <div className="flex justify-between my-8 border-t-2 border-white border-dashed"/>
+
         <HomeGrid title='Trending Playlists' isPlaylist/>
+
       </div>
       <Footer/>
     </div>
@@ -37,15 +57,9 @@ export default function Home({albumDetails,playlistDetails}) {
 
 export async function getServerSideProps() {
 
-  const accessToken =  await axios.get('https://ommm-website.prismic.io/api/v2')
-  const ref = accessToken.data.refs[0].ref
-
-  const albumPredicates = '[at(document.type, "releases")]'
-  const albumOrdering = '[my.releases.release_date desc]'
-  const album = await axios.get(`https://ommm-website.prismic.io/api/v2/documents/search?ref=${ref}&q=[${albumPredicates}]&orderings=${albumOrdering}`)
-  
-  const id = album.data.results.map((releases)=>releases.data.release_details[3].text)
-  const genre = album.data.results.map((releases)=>releases.data.release_details[2].text)
+  const ref = await accessToken()
+  const {id, genre} = await album(ref)
+  const playlistDetails = await playlist(ref)
 
   const albumDetails = await axios({
     method: 'post',
@@ -54,15 +68,12 @@ export async function getServerSideProps() {
       albumIds : `${id.join('%2C')}`
     }
   })
-  albumDetails.data.albums.map((albums,id)=>albums.genre = genre[id])
-  
-  const playlistPredicates = '[at(document.type, "playlists_page")]'
-  const playlist =  await axios.get(`https://ommm-website.prismic.io/api/v2/documents/search?ref=${ref}&q=[${playlistPredicates}]`)
-  const playlistDetails = Object.values(playlist.data.results[0].data)
 
-   return {
+  albumDetails.data.albums.map((albums,id)=>albums.genre = genre[id])
+
+  return {
     props: {
-      albumDetails : albumDetails.data,
+      albumDetails : albumDetails.data.albums,
       playlistDetails : playlistDetails
     }
   }

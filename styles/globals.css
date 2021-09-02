@@ -4,13 +4,13 @@
 
 @layer base {
     *{
-        @apply m-0 p-0 box-border;
+        @apply m-0 p-0 box-border font-poppins;
     }
     label{
-      @apply text-white select-none opacity-70;
+      @apply text-white select-none;
     }
     input,textarea{
-      @apply text-white focus:outline-none border-b bg-transparent w-72;
+      @apply text-white focus:outline-none border-b border-white bg-transparent w-64 ;
     }
     
     tr{
@@ -28,5 +28,14 @@
 
   .file-upload{
     @apply text-white border-none pt-2;
+  }
+  .skelton{
+    @apply my-2 bg-gray-800 animate-pulse rounded h-40 w-40  md:w-72 md:h-72 lg:w-56 lg:h-56 xl:w-72 xl:h-72;
+  }
+  .skelton-text{
+    @apply my-2 bg-gray-700 animate-pulse rounded h-4 w-40 md:w-72 lg:w-56 xl:w-72;
+  }
+  .skelton-hero{
+    @apply bg-gray-800 animate-pulse rounded h-64 w-64 md:h-80 md:w-80;
   }
 }

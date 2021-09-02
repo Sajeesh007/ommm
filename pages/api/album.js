@@ -15,7 +15,7 @@ export default async function handler(req, res) {
     },
     data: 'grant_type=client_credentials',
     method: 'POST'
-  }).then(async (tokenResponse) =>{
+  }).then((tokenResponse) =>{
     axios.get(`https://api.spotify.com/v1/albums?ids=${req.body.albumIds}`, { 
       headers: { 
         'Authorization' : `Bearer ${tokenResponse.data.access_token}` ,

@@ -13,7 +13,7 @@ function Card({image,title,artist,itemKey,isPlaylist,Linkto,genre}) {
 
   useEffect(() => {
     !isPlaylist &&  setArtistState(artist.length > 1 ? artist.join(', ') : artist.join(''))
-    const t = title.length > 17 ? title.slice(0,18) + '...' : title
+    const t = title.length > 15 ? title.slice(0,14) + '...' : title
     setTitleState(t)
   }, [])
 
@@ -28,7 +28,7 @@ function Card({image,title,artist,itemKey,isPlaylist,Linkto,genre}) {
   }
 
   return (
-    <div className='hover:cursor-pointer relative' id={itemKey} onClick={handleClick}>
+    <div className='hover:cursor-pointer relative ' id={itemKey} onClick={handleClick}>
       {!isPlaylist && 
         <div className=' hidden absolute lg:flex justify-center items-center top-0 right-0 z-10 bg-red-500 h-6 rounded-sm'>
           <h1 className='px-1 text-white text-sm'>{genre}</h1>

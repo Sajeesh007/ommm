@@ -38,7 +38,7 @@ export default function Header() {
         : 'flex justify-between items-center sticky top-0 z-50 h-12'}>
 
             <div className="flex items-center pt-1">
-              <Link href='/' className='cursor-pointer'>
+              <Link href='/' className='cursor-pointer' scroll={false}>
                 <a>
                   <img className="object-contain h-20 w-32" src={logo.src} alt='logo'/>
                 </a>
