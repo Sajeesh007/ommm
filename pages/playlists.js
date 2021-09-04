@@ -27,8 +27,11 @@ export default function Playlists() {
   return (
     <div>
       <Header/>
-      <div className='relative text-white'>
-        <h1 className="font-bold text-3xl flex justify-center">Playlists</h1>
+      <div className='relative text-white pt-4'>
+        <div className='flex justify-center lg:justify-start lg:ml-2 xl:ml-8'>
+          <h1 className="font-bold text-4xl flex justify-center">Playlists</h1>
+        </div>
+        
         {
           (playlistData) ? (
             <ContentGrid isPlaylist={true}/>

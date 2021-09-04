@@ -1,18 +1,23 @@
 /* eslint-disable @next/next/no-img-element */
-import { useEffect, useState } from 'react';
-import logo from '/public/logo.png'
+import { useEffect, useState } from 'react'
 import Link from 'next/link'
-import { FiMenu } from "react-icons/fi";
+
+import logo from '/public/logo.png'
+import { FiMenu } from "react-icons/fi"
 import Menu from './Menu';
-import MenuItems from './MenuItems';
+import MenuItems from './MenuItems'
+import { useAlbum } from '../../store/ContextProvider';
 
 export default function Header() {
+
+  const {setSearchAlbumData} = useAlbum()
 
   const [menuHidden, setMenuHidden] = useState(false)
   const [headerBg, setHeaderBg] = useState(false)
 
   const handleClick = ()=> {
     setMenuHidden(!menuHidden) 
+    setSearchAlbumData(null)
   }
    
   const handleScroll = () => {
@@ -38,7 +43,7 @@ export default function Header() {
         : 'flex justify-between items-center sticky top-0 z-50 h-12'}>
 
             <div className="flex items-center pt-1">
-              <Link href='/' className='cursor-pointer' scroll={false}>
+              <Link href='/' className='cursor-pointer' shallow={true}>
                 <a>
                   <img className="object-contain h-20 w-32" src={logo.src} alt='logo'/>
                 </a>

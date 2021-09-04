@@ -23,9 +23,11 @@ export default async function handler(req, res) {
     }).then((details)=>{
       res.status(200).json(details.data) 
     }).catch(err=>{
+      console.log('error in first ',err)
       res.status(400).end(err) 
     })
-  }).catch(err=>{      
+  }).catch(err=>{  
+    console.log(err)    
     res.status(400).end(err) 
   })     
 }

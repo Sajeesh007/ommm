@@ -1,5 +1,7 @@
 import { useState,useEffect } from "react";
+import Link from 'next/link'
 import { useRouter } from 'next/router'
+
 import { SiApplemusic, SiYoutube, SiSpotify } from "react-icons/si";
 import {useAlbum} from '../../store/ContextProvider'
 
@@ -37,15 +39,18 @@ export default function StreamButton({provider}) {
     }
   }, [provider,currentAlbum])
 
-  const handleClick = ()=>{
-    window.open(`${url}`,"_blank");
-  }
+  // const handleClick = ()=>{
+  //   window.open(`${url}`,"_blank");
+  // }
 
   return (
-    <div className='flex justify-start items-center md:hover:cursor-pointer pl-4 my-3  w-56 h-12 
-    rounded-full border-black border-opacity-40 bg-gray-100 backdrop-filter backdrop-blur-lg bg-opacity-10 text-white' 
-    onClick={handleClick}>
-      {icon} 
-    </div>
+    <Link href={url}>
+      <a target="_blank" rel="noreferrer">
+        <div className='flex justify-start items-center md:hover:cursor-pointer pl-4 my-3  w-56 h-12 
+        rounded-full border-black border-opacity-40 bg-gray-100 backdrop-filter backdrop-blur-lg bg-opacity-10 text-white'>
+              {icon} 
+        </div>
+      </a>
+    </Link>
   )
 }

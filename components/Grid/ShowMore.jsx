@@ -1,32 +1,33 @@
-import axios from "axios"
-import { useState } from "react"
+import { useEffect, useState } from "react"
+
 import {useAlbum} from '../../store/ContextProvider'
-import {albumId2} from '../../utils/albums'
+import { accessToken, album, fetchAlbum } from "../../utils/helper"
 
 export default function ShowMore() {
 
-  const [showMoreClicked, setShowMoreClicked] = useState(0)
+  const [showMoreClickedCount, setShowMoreClickedCount] = useState(0)
   const [hideShowMore, setHideShowMore] = useState(false)
 
-  const {setAlbumData,albumData} = useAlbum()
+  const {setAlbumData,albumData,searchAlbumData,setShowMore} = useAlbum()
+
+  useEffect(() => {
+    searchAlbumData && setHideShowMore(true)
+  }, [searchAlbumData])
 
   const handleClick = async () => {
-    if(showMoreClicked<1){
-      setShowMoreClicked((prevShowShowMoreClicked) => prevShowShowMoreClicked+1)
-      
-      const albumDetails = await axios({
-        method: 'post',
-        url: 'api/album',
-        data: {
-          albumIds : `${albumId2.join('%2C')}`
-        }
-      });
+    const ref = await accessToken()
+    const {id, genre, currentPage, totalPages} = await album(ref,20,2)
+    setShowMore({ currentPage : currentPage,clicked : true})
 
-      setAlbumData([...albumData,...albumDetails.data.albums])
-      if(showMoreClicked + 1 === 1){
+    if(showMoreClickedCount < totalPages - 1){
+      const albumDetails = await fetchAlbum(id,genre)
+      setShowMoreClickedCount((prevShowShowMoreClickedCount) => prevShowShowMoreClickedCount+1)
+      setAlbumData([...albumData,...albumDetails])
+      if(showMoreClickedCount + 1 === totalPages - 1){
         setHideShowMore(true)
       }
     }
+
   }
 
   return (
