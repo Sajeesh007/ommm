@@ -18,7 +18,11 @@ function ContextProvider({children}) {
 
     const [searchAlbumData, setSearchAlbumData] = useState(null)
 
-    const [showMore, setShowMore] = useState({currentPage : 1, clicked : false})
+    const [showMore, setShowMore] = useState({currentPage : 1, clickedCount : 0,clicked : false})
+    const [hideShowMore, setHideShowMore] = useState(true)
+
+    const [dateFilterOrder, setDateFilterOrder] = useState('desc')
+    
 
     const [login, setLogin] = useState(false)
     
@@ -43,7 +47,10 @@ function ContextProvider({children}) {
               searchAlbumData, 
               setSearchAlbumData,
               prismicRef,
-              setPrismicRef
+              setPrismicRef,
+              dateFilterOrder, 
+              setDateFilterOrder,
+              hideShowMore, setHideShowMore,
             } 
         }
         >   

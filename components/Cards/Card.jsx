@@ -7,9 +7,7 @@ import {useAlbum} from '../../store/ContextProvider'
 
 function Card({image,title,artist,itemKey,isPlaylist,Linkto,genre}) {
 
-
- 
-  const {setCurrentAlbum,albumData,setCurrentAlbumId} = useAlbum()
+  const {setCurrentAlbum,searchAlbumData,albumData,setCurrentAlbumId} = useAlbum()
   const [artistState, setArtistState] = useState(artist)
   const [titleState, setTitleState] = useState(title)
 
@@ -24,7 +22,12 @@ function Card({image,title,artist,itemKey,isPlaylist,Linkto,genre}) {
       window.open(Linkto, '_blank')
     else{
       setCurrentAlbumId(parseInt(e.currentTarget.id))
-      setCurrentAlbum(albumData[parseInt(e.currentTarget.id)]);
+      if(searchAlbumData){
+        setCurrentAlbum(searchAlbumData[parseInt(e.currentTarget.id)])
+
+      }else{
+        setCurrentAlbum(albumData[parseInt(e.currentTarget.id)])
+      }
     }
   }
 
@@ -35,8 +38,8 @@ function Card({image,title,artist,itemKey,isPlaylist,Linkto,genre}) {
       <Link href={`/releases/${title.replace(/\s+/g, '-').toLowerCase()}`}> 
         <a >
           {!isPlaylist && 
-            <div className=' hidden absolute lg:flex justify-center items-center top-0 right-0 z-10 bg-black h-6 rounded-b-sm rounded-tl-sm'>
-              <h1 className='px-1 text-white text-sm'>{genre}</h1>
+            <div className='absolute flex justify-center items-center top-0 right-0 z-10 bg-black h-6 rounded-b-sm rounded-tl-sm'>
+              <h1 className='px-1 text-white font-light text-xs md:text-sm'>{genre}</h1>
             </div>}
           <div>
             <Image className='md:hover:transform md:hover:scale-105 md:hover:shadow-lg h-60 w-60 rounded-sm md:h-72 md:w-72'

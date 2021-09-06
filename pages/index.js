@@ -47,7 +47,7 @@ export async function getServerSideProps({_,res}) {
   console.log('s');
 
   const ref = await accessToken()
-  const {id, genre} = await album(ref,20,1)
+  const {id, genre} = await album(ref,20,1,'desc')
   const playlistDetails = await playlist(ref)
 
   const albumDetails = await axios({

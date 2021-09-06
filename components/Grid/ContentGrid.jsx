@@ -7,7 +7,7 @@ export default function ContentGrid({isPlaylist}) {
   const {albumData,playlistData,searchAlbumData} = useAlbum()
   
   return (
-    <div className='text-white relative mb-6 mt-2 select-none'>
+    <div className='text-white relative mb-6 mt-2 select-none lg:mx-8'>
       <div className='grid grid-cols-2 gap-4 place-items-center pt-2 px-2 lg:grid-cols-4'>
         { 
           !isPlaylist ? 

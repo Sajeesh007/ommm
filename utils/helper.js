@@ -34,11 +34,12 @@ const albumSearch = async (ref, search) => {
   }
 }
 
-const album = async (ref,pageSize,pageNumber) => {
+const album = async (ref,pageSize,pageNumber,order) => {
   const albumPredicates = '[at(document.type, "releases")]'
-  const albumOrdering = '[my.releases.release_date desc]'
+  const albumOrdering = `[my.releases.release_date ${order}]`
   const album = await axios.get(`https://ommm-website.prismic.io/api/v2/documents/search?ref=${ref}&q=[${albumPredicates}]
   &orderings=${albumOrdering}&pageSize=${pageSize}&page=${pageNumber}`)
+  
   return {
     id : album.data.results.map((releases)=>releases.data.release_details[3].text),
     genre : album.data.results.map((releases)=>releases.data.release_details[2].text),

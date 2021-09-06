@@ -16,7 +16,7 @@ export default function Albums() {
 
 
 	return (
-		<div className='text-white bg-gray-900'> 
+		<div> 
       <Header/>
 
       <Banner />
@@ -31,7 +31,7 @@ export default function Albums() {
       </div>
 
       {/* Streaming Options */}
-      <div className='relative flex flex-col'>
+      <div className='relative flex flex-col text-white'>
         <h1 className='flex justify-center text-2xl font-medium '>Stream It</h1>
         <div className='flex flex-col pb-2 justify-center items-center'>
           <StreamButton provider={'spotify'}/>
@@ -50,7 +50,10 @@ export default function Albums() {
         </div>
       </div> */}
 
-      <Footer/> 
+       <div className='relative' >
+        <Footer/>
+      </div>
+
       
 		</div>
   )
