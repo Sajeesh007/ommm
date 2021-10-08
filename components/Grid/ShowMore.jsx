@@ -13,9 +13,8 @@ export default function ShowMore() {
 
   const handleClick = async () => {
     const ref = await accessToken()
-    const {id, genre, currentPage, totalPages} = await album(ref,20,2,dateFilterOrder)
+    const {id, genre, currentPage, totalPages} = await album(ref,20,showMore.clickedCount+2,dateFilterOrder)
     setShowMore((prev)=>({currentPage : currentPage, clickedCount : prev.clickedCount+1 ,clicked : true}))
-
 
     if(showMore.clickedCount < totalPages - 1){
       const albumDetails = await fetchAlbum(id,genre)

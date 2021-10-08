@@ -46,8 +46,8 @@ export default function Releases() {
   return (
     <div>
       <Header/>
-      <div className='relative text-white pt-4 '>
 
+      <div className='text-white pt-4 min-h-screen' >
         {/* Search  & filter */}
         <div className='flex flex-col justify-center it lg:flex-row lg:justify-between px-14'>
           <SearchBar/>
@@ -81,6 +81,7 @@ export default function Releases() {
       <div className='relative flex justify-center items-center mb-4'>
         <ShowMore/>
       </div>
+      
       <Footer/>
     </div>
   )

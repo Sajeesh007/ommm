@@ -6,7 +6,7 @@ import Form from '../../components/Form/Form'
 export default function demo() {
 
   return (
-    <div className='bg-gradient-to-b from-red-200 via-red-400 to-red-600'>
+    <div className='bg-gradient-to-b from-red-300 via-red-500 to-red-700'>
       <Header/>
       <div className='flex justify-center items-center pb-2 lg:pb-0'>
         <h1 className='font-bold text-3xl text-white'>Demo Submission</h1>

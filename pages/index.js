@@ -23,15 +23,16 @@ export default function Home({albumDetails,playlistDetails,prismicRef}) {
   return (
     <div>
       <Header isHome/>
-      <Banner />
-      <ReleaseCard isHome/> 
-
       <div>
-        <HomeGrid title='Latest Releases'/>
-        <div className="flex justify-between my-8 border-t-2 border-white border-dashed"/>
-        <HomeGrid title='Trending Playlists' isPlaylist/>
-      </div>
+        <Banner />
+        <ReleaseCard isHome/> 
 
+        <div>
+          <HomeGrid title='Latest Releases'/>
+          <div className="flex justify-between my-8 border-t-2 border-white border-dashed"/>
+          <HomeGrid title='Trending Playlists' isPlaylist/>
+        </div>
+      </div>
       <Footer/>
     </div>
   )
@@ -43,8 +44,6 @@ export async function getServerSideProps({_,res}) {
     'Cache-Control',
     'public, s-maxage=30, stale-while-revalidate=59'
   )
-
-  console.log('s');
 
   const ref = await accessToken()
   const {id, genre} = await album(ref,20,1,'desc')

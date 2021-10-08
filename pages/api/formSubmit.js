@@ -13,8 +13,6 @@ export default async function handler(req,res){
 
   form.parse(req, async(err,fields,files)=>{
 
-    console.log(fields);
-
     if(err){
       return res.status(400).end({
         status : 'Failed',

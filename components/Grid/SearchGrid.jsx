@@ -4,8 +4,6 @@ import SearchCard from '../Cards/SearchCard'
 export default function SearchGrid() {
 
   const {searchAlbumData} = useAlbum()
-
-  console.log(searchAlbumData)
   
   return (
     <div>

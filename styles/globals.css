@@ -12,12 +12,23 @@
     input,textarea{
       @apply text-white focus:outline-none border-b border-white bg-transparent w-64 ;
     }
-    
-    tr{
-      @apply border-2;
+    thead{
+      @apply border-none text-sm font-semibold text-center h-10 ;
     }
-    td,th{
-      @apply border-2 w-40 sm:w-48 break-all;
+    tfoot{
+      @apply border-none text-sm text-center h-10 ;
+    }
+    tbody{
+      @apply border-none text-sm text-center ;
+    }
+    tr{
+      @apply border-none;
+    }
+    td{
+      @apply border-none h-10 bg-gray-700 w-40;
+    }
+    th{
+      @apply border-none  ;
     }
 }
 

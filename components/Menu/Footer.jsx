@@ -2,7 +2,7 @@ import Link from 'next/link'
 
 function Footer() {
   return (
-    <div className="bg-red-500 text-white flex flex-col z-100 h-36 shadow-lg">
+    <div className="relative bg-red-600 text-white flex flex-col z-100 h-36 shadow-lg">
       <div className='flex flex-col text-base font-bold justify-center items-center py-4'>
         <div className='flex'>
           <Link href='/privacy-policy' >
